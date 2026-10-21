@@ -28,19 +28,10 @@ jobs:
 
       - name: Build APK
         run: |
-          GRADLEW=$(find extracted -type f -name gradlew | head -n 1)
-          if [ -z "$GRADLEW" ]; then
-            echo "ERROR: No gradlew file found in the extracted project."
-            echo "Checking Android folder:"
-            find extracted -maxdepth 5 -type d -name android
-            echo "Top-level files:"
-            find extracted -maxdepth 3 -type f | head -n 80
-            exit 1
-          fi
-          ANDROID_DIR=$(dirname "$GRADLEW")
-          cd "$ANDROID_DIR"
-          chmod +x gradlew
-          ./gradlew assembleDebug
+          
+cd extracted/android
+gradle assembleDebug
+
 
       - name: Upload APK
         if: success()
